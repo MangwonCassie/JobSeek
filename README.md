@@ -1,20 +1,15 @@
 # JobSeekingApp
 
-React, Node, MongoDB, Express
+React, Node, MongoDB, Expresst<br/>
 
-Library
-bcrypt cloudinary cookie-parser cors dotenv express express-fileupload jsonwebtoken mongoose validator
+Libraryt<br/>
+bcrypt cloudinary cookie-parser cors dotenv express express-fileupload jsonwebtoken mongoose validatort<br/>
 
-⭐To Start
-mkdir mernjobapp
-mkdir backend
-npm init
-npm i bcrypt cloudinary cookie-parser cors dotenv express express-fileupload jsonwebtoken mongoose validator
 
-⭐Git Configuration
-git init
-git remote add origin https://github.com/MangwonCassie/JobSeekingApp.git
-⭐⭐⭐⭐⭐(node_modules/ in .gitignore)⭐⭐⭐⭐
-git add .
-git commit -m "commit message" 
-git push -u origin master
+⭐Git Configurationt<br/>
+git initt<br/>
+git remote add origin https://github.com/MangwonCassie/JobSeekingApp.gitt<br/>
+⭐⭐⭐⭐⭐(node_modules/ in .gitignore)⭐⭐⭐⭐t<br/>
+git add .t<br/>
+git commit -m "commit message" <br/>
+git push -u origin mastert<br/>
