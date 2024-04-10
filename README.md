@@ -1,15 +1,15 @@
 # JobSeekingApp
 
-React, Node, MongoDB, Expresst<br/>
+React, Node, MongoDB, Express<br/>
 
-Libraryt<br/>
-bcrypt cloudinary cookie-parser cors dotenv express express-fileupload jsonwebtoken mongoose validatort<br/>
+Library<br/>
+bcrypt cloudinary cookie-parser cors dotenv express express-fileupload jsonwebtoken mongoose validator<br/>
 
 
 ⭐Git Configurationt<br/>
-git initt<br/>
-git remote add origin https://github.com/MangwonCassie/JobSeekingApp.gitt<br/>
-⭐⭐⭐⭐⭐(node_modules/ in .gitignore)⭐⭐⭐⭐t<br/>
-git add .t<br/>
+git init<br/>
+git remote add origin https://github.com/MangwonCassie/JobSeekingApp.git<br/>
+⭐⭐⭐⭐⭐(node_modules/ in .gitignore)⭐⭐⭐⭐<br/>
+git add .<br/>
 git commit -m "commit message" <br/>
-git push -u origin mastert<br/>
+git push -u origin master<br/>
