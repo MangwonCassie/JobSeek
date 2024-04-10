@@ -14,4 +14,7 @@ npm i bcrypt cloudinary cookie-parser cors dotenv express express-fileupload jso
 ⭐Git Configuration
 git init
 git remote add origin https://github.com/MangwonCassie/JobSeekingApp.git
-git push -u origin main (or other branch name)
+⭐⭐⭐⭐⭐(node_modules/ in .gitignore)⭐⭐⭐⭐
+git add .
+git commit -m "commit message" 
+git push -u origin master
