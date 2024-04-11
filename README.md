@@ -1,5 +1,10 @@
-React, Node, MongoDB, Express
+React, Node, MongoDB, Express<br/>
 
-Library bcrypt cloudinary cookie-parser cors dotenv express express-fileupload jsonwebtoken mongoose validator
+Library bcrypt cloudinary cookie-parser cors dotenv express express-fileupload jsonwebtoken mongoose validator<br/><br/>
 
-⭐Git Configuration git init git remote add origin https://github.com/MangwonCassie/JobSeekingApp.git ⭐⭐⭐⭐⭐(node_modules/ in .gitignore)⭐⭐⭐⭐ git add . git commit -m "commit message" git push -u origin master
+⭐Git Configuration <br/>
+git init git remote add origin https://github.com/MangwonCassie/JobSeekingApp.git <br/>
+⭐⭐⭐⭐⭐(node_modules/ in .gitignore)⭐⭐⭐⭐<br/>
+git add .<br/>
+git commit -m "commit message"<br/>
+git push -u origin master<br/>
