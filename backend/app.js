@@ -6,6 +6,7 @@ import jobRouter from "./routes/jobRoutes.js";
 import userRouter from "./routes/userRoutes.js";
 import applicationRouter from "./routes/applicationRoutes.js";
 import { dbConnection } from './database/dbConnection.js';
+import cors from "cors";
 
 const app = express();
 dotenv.config({path: "./config/config.env"});
