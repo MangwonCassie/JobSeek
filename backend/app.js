@@ -9,14 +9,14 @@ import { dbConnection } from './database/dbConnection.js';
 import cors from "cors";
 
 const app = express();
-dotenv.config({path: "./config/config.env"});
+dotenv.config({ path: "./config/.env" });
 
 app.use(
-    cors({
-        origin: [process.env.FRONTEND_URL],
-        method: ["GET", "POST", "DELETE", "PUT"],
-        credentials: true,
-    })
+  cors({
+    origin: [process.env.FRONTEND_URL],
+    method: ["GET", "POST", "DELETE", "PUT"],
+    credentials: true,
+  })
 )
 
 app.use(cookieParser());
@@ -25,17 +25,17 @@ app.use(express.urlencoded({ extended: true }));
 
 
 app.use(
-    fileUpload({
-      useTempFiles: true,
-      tempFileDir: "/tmp/",
-    })
-  );
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: "/tmp/",
+  })
+);
 
 
 app.use("/api/v1/user", userRouter);
-  
+
 app.use("/api/v1/application", applicationRouter);
-  
+
 app.use("/api/v1/job", jobRouter);
 
 dbConnection();
