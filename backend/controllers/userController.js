@@ -24,3 +24,24 @@ export const register = catchAsyncError(async (req, res, next) => {
     });
     sendToken(user, 200, res, "User Registered Successfully");
 });
+
+export const login = catchAsyncError(async (req, res, next) => {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+        return next(
+            new ErrorHandler("please provide email, password", 400)
+        );
+    }
+    const user = await User.findOne({ email }).select("password");;
+
+    if (!user) {
+        return next(new ErrorHandler("Invalid Email or password"));
+    }
+
+    const isPasswordMatched = await user.comparePassword(password);
+    if (!isPasswordMatched) {
+        return next(new ErrorHandler("Invalid Email Or Password.", 400));
+    }
+    sendToken(user, 201, res, "User Logged In!");
+});
