@@ -59,6 +59,6 @@ git push -u origin master<br/>
 <br><br>
 ![logout](https://github.com/MangwonCassie/JobSeek/assets/129250487/7b1087ac-7f01-41df-a64a-b1d99219f317)
 
-
+![token 쿠키 설정](https://github.com/MangwonCassie/JobSeek/assets/129250487/f75db2d3-0fcb-4aad-a659-45abab202066)
 
 
