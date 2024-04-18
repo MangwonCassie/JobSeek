@@ -26,14 +26,14 @@ export const register = catchAsyncError(async (req, res, next) => {
 });
 
 export const login = catchAsyncError(async (req, res, next) => {
-    const { email, password } = req.body;
+    const { email, password, role } = req.body;
 
-    if (!email || !password) {
+    if (!email || !password || !role) {
         return next(
-            new ErrorHandler("please provide email, password", 400)
+            new ErrorHandler("Please provide email ,password and role.", 400)
         );
     }
-    const user = await User.findOne({ email }).select("password");;
+    const user = await User.findOne({ email }).select("+password");;
 
     if (!user) {
         return next(new ErrorHandler("Invalid Email or password"));
@@ -43,8 +43,15 @@ export const login = catchAsyncError(async (req, res, next) => {
     if (!isPasswordMatched) {
         return next(new ErrorHandler("Invalid Email Or Password.", 400));
     }
+
+    if (user.role !== role) {
+        return next(
+            new ErrorHandler(`User with provided email and ${role}, user.role ${user.role} not found!`, 404)
+        );
+    }
     sendToken(user, 201, res, "User Logged In!");
 });
+
 
 export const logout = catchAsyncError(async (req, res, next) => {
     res.status(201).cookie("token", "", {
