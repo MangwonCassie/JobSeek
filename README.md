@@ -62,3 +62,47 @@ git push -u origin master<br/>
 ![token 쿠키 설정](https://github.com/MangwonCassie/JobSeek/assets/129250487/f75db2d3-0fcb-4aad-a659-45abab202066)
 
 
+<br>
+<h5>role에 접근 안되는 이유</h5>
+- +를 사용하지 않으면 해당 필드는 기본적으로 조회되지 않습니다. 즉, 해당 필드는 결과에 포함되지 않습니다. 따라서 +를 사용하여 해당 필드를 명시적으로 선택하여 조회해야 합니다. 그렇지 않으면 해당 필드에 접근할 때 undefined가 반환되거나 오류가 발생할 수 있습니다.
+- 관련 코드
+```export const login = catchAsyncError(async (req, res, next) => {
+    const { email, password, role } = req.body;
+
+    if (!email || !password || !role) {
+        return next(
+            new ErrorHandler("Please provide email ,password and role.", 400)
+        );
+    }
+    const user = await User.findOne({ email }).select("password");;
+
+    if (!user) {
+        return next(new ErrorHandler("Invalid Email or password"));
+    }
+
+    const isPasswordMatched = await user.comparePassword(password);
+    if (!isPasswordMatched) {
+        return next(new ErrorHandler("Invalid Email Or Password.", 400));
+    }
+
+    if (user.role !== role) {
+        return next(
+            new ErrorHandler(`User with provided email and ${role}, user.role ${user.role} not found!`, 404)
+        );
+    }
+    sendToken(user, 201, res, "User Logged In!");
+    });```
+
+<br>
+
+
+![post a job](https://github.com/MangwonCassie/JobSeek/assets/129250487/3655c3cd-b744-48c9-b94f-feecc0e296f6)
+
+- 해당 오류
+<br>
+
+![role is not defined](https://github.com/MangwonCassie/JobSeek/assets/129250487/7c43f0ec-f796-4137-8664-82073805285c)
+
+
+<br>
+
