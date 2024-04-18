@@ -120,3 +120,28 @@ export const updateJob = catchAsyncError(async (req, res, next) => {
     });
 });
 
+export const deleteJob = catchAsyncError(async (req, res, next) => {
+
+    const { role } = req.user;
+    if (role === "Job Seeker") {
+        return next(
+            new ErrorHandler(
+                "Job Seeker is not allowed to access this resources (접근 불가)",
+                400
+            )
+        );
+    }
+
+    const { id } = req.params;
+    let job = await Job.find({ id }); ////객체가 아니면 ObjectParameterEerror 난다. to find() must be an object
+
+    if (!job) {
+        return next(new ErrorHandler("OOPS! Job not found.", 404));
+    }
+
+    await Job.deleteOne();
+    res.status(200).json({
+        success: true,
+        message: "Job Deleted Successfully"
+    })
+});
