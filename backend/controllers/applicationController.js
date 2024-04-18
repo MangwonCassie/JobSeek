@@ -2,10 +2,10 @@ import { catchAsyncError } from "../middlewares/catchAsyncError.js";
 import ErrorHanlder from "../middlewares/error.js";
 import { Application } from "../model/application.js";
 
-export const jobseekerGetAllApplications = catchAsyncError(async (req, res, next) => {
+export const employerGetAllApplications = catchAsyncError(async (req, res, next) => {
     const { role } = req.user;
 
-    if (role === "Employer") {
+    if (role === "Job Seeker") {
         return next(
             new ErrorHanlder(
                 "Job Seeker is not allowed to access these resources!",
