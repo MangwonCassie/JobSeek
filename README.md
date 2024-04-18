@@ -31,7 +31,7 @@ git push -u origin master<br/>
 <br>
 [추가 참고 자료:] (https://velog.io/@tastestar/Express-error-handling)
 <br>
-- http요청과 별도로 jwt를 보낸다. jwt를 생성하는로직과 별도로 클라이언트에게 보내는 logic sendToken 함수 설정. <br>
+<h5>http요청과 별도로 jwt를 보낸다. jwt를 생성하는로직과 별도로 클라이언트에게 보내는 logic sendToken 함수 설정. </h5><br>
 - statusCode는 Express.js에서 내장된 메서드인 res.status()의 매개변수를 이용해서 res.status(statusCode)로 응답상태 코드를 설정하고, res.cookie 메서드를 사용하여 클라이언트에게 jwt를 담을 쿠키를 설정한다. <br>
 - 이 때 json형식으로 응답을 보내터 클라이언트에게 성공 및 "사용자 정보"와 함께 "토큰"을 보낸다. <br>
 - JSON Web Token(JWT)을 생성할 때 사용되는 시크릿 키(secretOrPrivateKey)를 정의하는 것은 jsonwebtoken 라이브러리를 사용하여 JWT를 생성할 때 필요하므로 env파일에 JWT_SECRET_KEY=임의로 지정 <br>
@@ -40,7 +40,25 @@ git push -u origin master<br/>
 
 ![register token](https://github.com/MangwonCassie/JobSeek/assets/129250487/42a48de7-bb0f-4b1c-b780-c73c4c77f3c7)
 ![expiresin](https://github.com/MangwonCassie/JobSeek/assets/129250487/b106cfbf-fe56-4e88-95cc-b33798b4b12a)
+<br>
+<h5>http요청과 별도로 jwt를 보낸다. jwt를 생성하는로직과 별도로 클라이언트에게 보내는 logic sendToken 함수 설정. </h5><br>
+- 로그아웃 로직에서는 쿠키의 token을 빈 문자열로 설정하여 브라우저에서 해당 쿠키를 삭제하고, 만료일을 현재 시간으로 설정하여 쿠키를 즉시 만료시켜 로그아웃으로 처리합니다.
+<br>
+-코드 <br>
+```export const logout = catchAsyncError(async (req, res, next) => {
+    res.status(201).cookie("token", "", {
+        httpOnly: true,
+        expires: new Date(Date.now()),
+    })
+        .json({
+            success: true,
+            message: "User Logged Out Successfully"
+        })
+```})
 
+<br><br>
+![logout](https://github.com/MangwonCassie/JobSeek/assets/129250487/7b1087ac-7f01-41df-a64a-b1d99219f317)
 
+![token 쿠키 설정](https://github.com/MangwonCassie/JobSeek/assets/129250487/f75db2d3-0fcb-4aad-a659-45abab202066)
 
 
