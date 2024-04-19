@@ -21,7 +21,8 @@ git push -u origin master<br/>
 - 함수를 인수로 받아 express 미들웨어구조에 맞게 함수를 구성하고, Promise를 이용해서 비동기 함수 구현, 비동기 작업이 실패하면 catch를 통해 next로 함수에 오류를 전달하여 express의 오류처리 미들웨어로 이동시킴.
 <br</br>
 
-```export const catchAsyncError = (theFunction) => {
+```
+export const catchAsyncError = (theFunction) => {
     return (req, res, next)=>{
         Promise.resolve(theFunction(req, res, next)).catch(next);
     }
@@ -45,7 +46,9 @@ git push -u origin master<br/>
 - 로그아웃 로직에서는 쿠키의 token을 빈 문자열로 설정하여 브라우저에서 해당 쿠키를 삭제하고, 만료일을 현재 시간으로 설정하여 쿠키를 즉시 만료시켜 로그아웃으로 처리합니다.
 <br>
 -코드 <br>
-```export const logout = catchAsyncError(async (req, res, next) => {
+
+```
+export const logout = catchAsyncError(async (req, res, next) => {
     res.status(201).cookie("token", "", {
         httpOnly: true,
         expires: new Date(Date.now()),
@@ -54,12 +57,14 @@ git push -u origin master<br/>
             success: true,
             message: "User Logged Out Successfully"
         })
-```})
-
-
-
+})
+```
 
 <br><br>
+
+
+
+
 ![logout](https://github.com/MangwonCassie/JobSeek/assets/129250487/7b1087ac-7f01-41df-a64a-b1d99219f317)
 
 ![token 쿠키 설정](https://github.com/MangwonCassie/JobSeek/assets/129250487/f75db2d3-0fcb-4aad-a659-45abab202066)
@@ -69,10 +74,11 @@ git push -u origin master<br/>
 <h5>role에 접근 안되는 이유</h5><br>
 - +를 사용하지 않으면 해당 필드는 기본적으로 조회되지 않습니다. 즉, 해당 필드는 결과에 포함되지 않습니다. 따라서 +를 사용하여 해당 필드를 명시적으로 선택하여 조회해야 합니다. 그렇지 않으면 해당 필드에 접근할 때 undefined가 반환되거나 오류가 발생할 수 있습니다.<br>
 <br>
-- 관련 코드<br>
+- 관련 코드
+<br>
 
-
-    ```export const login = catchAsyncError(async (req, res, next) => {
+```
+export const login = catchAsyncError(async (req, res, next) => {
     const { email, password, role } = req.body;
 
     if (!email || !password || !role) {
@@ -97,18 +103,17 @@ git push -u origin master<br/>
         );
     }
     sendToken(user, 201, res, "User Logged In!");
-   });``` 
+   });
+```
 
 <br>
-<br><br>
+
 
 
 
 
 ![post a job](https://github.com/MangwonCassie/JobSeek/assets/129250487/3655c3cd-b744-48c9-b94f-feecc0e296f6)
-
 <br>
-
 - 해당 오류
 <br>
 
@@ -126,7 +131,7 @@ CLOUDINARY_CLIENT_NAME=fffffff
 CLOUDINARY_CLIENT_API=541233sss86232323
 CLOUDINARY_CLIENT_SECRET=ubOH3VHq임의 코드
 ```
-<br>
+<br><br>
 - server.js 설정<br>
 
 ```
@@ -143,6 +148,7 @@ app.listen(process.env.PORT, () => {
     console.log(`server is running ${process.env.PORT}`);
     });
 ```
+<br>
 <br>
 -cloudinary resume 업로드 로직<br>
 <br>
@@ -231,7 +237,8 @@ export const postApplication = catchAsyncError(async (req, res, next) => {
    });
 ```
 
-<br>
+<br><br>
+
 
 ![cloudinary config](https://github.com/MangwonCassie/JobSeek/assets/129250487/6f271835-9347-4e0e-b31e-054fd9dd2050)
 
