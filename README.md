@@ -239,6 +239,18 @@ export const postApplication = catchAsyncError(async (req, res, next) => {
 
 <br><br>
 
+- 일반적으로 파일 업로드를 처리하는 경우, 클라이언트 측에서 파일을 서버에 전송할 때는 파일을 multipart/form-data 형식으로 보냅니다. 이때 클라이언트가 전송한 파일은 서버의 라우트 핸들러에서 해당 요청(request) 객체의 req.files 속성에 자동으로 포함됩니다. <br>
+
+- 이는 주로 파일 업로드를 위해 사용되는 라이브러리(예: multer)가 이 역할을 수행하기 때문입니다. multer 브라우저가 보낸 파일 데이터를 파싱하고 req.files에 적절한 형식으로 저장합니다.<br>
+- Object.keys() 메서드는 주어진 객체의 열거 가능한 속성 이름들을 배열로 반환합니다. 이 배열은 객체의 속성 이름(key)을 포함하게 됩니다. 따라서 Object.keys(obj).length는 해당 객체 obj의 속성의 개수를 나타냅니다.<br>
+- { resume } = req.files;  // req.files 객체에서 resume 속성에 해당하는 파일을 가져온 것.<br>
+-image/png: PNG 형식의 이미지 파일을 나타냅니다., image/jpeg: JPEG 형식의 이미지 파일을 나타냅니다., image/webp: WebP 형식의 이미지 파일을 나타냅니다.<br>
+-!allowedFormats.includes(resume.mimetype) 조건문은 resume 파일의 mimetype이 allowedFormats 배열에 포함되지 않을 때를 조건문으로 표현한 것입니다. <br>
+- cloudinary.uploader.upload()는 cloudinary를 사용하여 resume 파일을 클라우드에 업로드합니다.
+- resume.tempFilePath는 업로드할 파일의 임시 경로입니다.
+- 업로드된 파일의 정보를 cloudinaryResponse 변수에 할당
+- applicationID 객체를 만들 때 req.user._id는 현재 요청을 보내는 사용자 ID를 나타내는데 로그인 후 Express 세션 미들웨어가 사용자 정보를 세션에 저장하고 "요청 객체(req)에 사용자정보를 추가한다." 
+
 
 ![cloudinary config](https://github.com/MangwonCassie/JobSeek/assets/129250487/6f271835-9347-4e0e-b31e-054fd9dd2050)
 
