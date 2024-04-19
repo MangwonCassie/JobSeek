@@ -56,6 +56,9 @@ git push -u origin master<br/>
         })
 ```})
 
+
+
+
 <br><br>
 ![logout](https://github.com/MangwonCassie/JobSeek/assets/129250487/7b1087ac-7f01-41df-a64a-b1d99219f317)
 
@@ -63,10 +66,13 @@ git push -u origin master<br/>
 
 
 <br>
-<h5>role에 접근 안되는 이유</h5>
-- +를 사용하지 않으면 해당 필드는 기본적으로 조회되지 않습니다. 즉, 해당 필드는 결과에 포함되지 않습니다. 따라서 +를 사용하여 해당 필드를 명시적으로 선택하여 조회해야 합니다. 그렇지 않으면 해당 필드에 접근할 때 undefined가 반환되거나 오류가 발생할 수 있습니다.
-- 관련 코드
-```export const login = catchAsyncError(async (req, res, next) => {
+<h5>role에 접근 안되는 이유</h5><br>
+- +를 사용하지 않으면 해당 필드는 기본적으로 조회되지 않습니다. 즉, 해당 필드는 결과에 포함되지 않습니다. 따라서 +를 사용하여 해당 필드를 명시적으로 선택하여 조회해야 합니다. 그렇지 않으면 해당 필드에 접근할 때 undefined가 반환되거나 오류가 발생할 수 있습니다.<br>
+<br>
+- 관련 코드<br>
+
+
+    ```export const login = catchAsyncError(async (req, res, next) => {
     const { email, password, role } = req.body;
 
     if (!email || !password || !role) {
@@ -91,12 +97,17 @@ git push -u origin master<br/>
         );
     }
     sendToken(user, 201, res, "User Logged In!");
-    });```
+   });``` 
 
 <br>
+<br><br>
+
+
 
 
 ![post a job](https://github.com/MangwonCassie/JobSeek/assets/129250487/3655c3cd-b744-48c9-b94f-feecc0e296f6)
+
+<br>
 
 - 해당 오류
 <br>
@@ -106,3 +117,128 @@ git push -u origin master<br/>
 
 <br>
 
+
+<h4>Cloudinary (resume 저장소) 사용법</h4><br>
+- .env 파일 설정<br>
+
+```
+CLOUDINARY_CLIENT_NAME=fffffff
+CLOUDINARY_CLIENT_API=541233sss86232323
+CLOUDINARY_CLIENT_SECRET=ubOH3VHq임의 코드
+```
+<br>
+- server.js 설정<br>
+
+```
+import app from "./app.js";
+import cloudinary from "cloudinary";
+
+cloudinary.v2.config({
+    cloud_name: process.env.CLOUDINARY_CLIENT_NAME,
+    api_key: process.env.CLOUDINARY_CLIENT_API,
+    api_secret: process.env.CLOUDINARY_CLIENT_SECRET,
+});
+
+app.listen(process.env.PORT, () => {
+    console.log(`server is running ${process.env.PORT}`);
+    });
+```
+<br>
+-cloudinary resume 업로드 로직<br>
+<br>
+
+```
+export const postApplication = catchAsyncError(async (req, res, next) => {
+    const { role } = req.user;
+    if (role === "Employer") {
+        return next(
+            new ErrorHandler("Employer not allowed to access this resource.", 400)
+        );
+    }
+    if (!req.files || Object.keys(req.files).length === 0) {
+        return next(new ErrorHandler("Resume File Required!", 400));
+    }
+
+    const { resume } = req.files;
+    const allowedFormats = ["image/png", "image/jpeg", "image/webp"];
+    if (!allowedFormats.includes(resume.mimetype)) {
+        return next(
+            new ErrorHandler("Invalid file type. Please upload a PNG file.", 400)
+        );
+    }
+    const cloudinaryResponse = await cloudinary.uploader.upload(
+        resume.tempFilePath
+    );
+
+    if (!cloudinaryResponse || cloudinaryResponse.error) {
+        console.error(
+            "Cloudinary Error:",
+            cloudinaryResponse.error || "Unknown Cloudinary error"
+        );
+        return next(new ErrorHandler("Failed to upload Resume to Cloudinary", 500));
+    }
+    const { name, email, coverLetter, phone, address, jobId } = req.body;
+
+    console.log("Job ID:", jobId);
+
+    const applicantID = {
+        user: req.user._id,
+        role: "Job Seeker",
+    };
+    if (!jobId) {
+        return next(new ErrorHandler("Job not found!", 404));
+    }
+    const jobDetails = await Job.findById(jobId);
+
+    if (!jobDetails) {
+        return next(new ErrorHandler("Job not found!", 404));
+    }
+
+    const employerID = {
+        user: jobDetails.postedBy,
+        role: "Employer",
+    };
+    if (
+        !name ||
+        !email ||
+        !coverLetter ||
+        !phone ||
+        !address ||
+        !applicantID ||
+        !employerID ||
+        !resume
+    ) {
+        return next(new ErrorHandler("Please fill all fields.", 400));
+    }
+    const application = await Application.create({
+        name,
+        email,
+        coverLetter,
+        phone,
+        address,
+        applicantID,
+        employerID,
+        resume: {
+            public_id: cloudinaryResponse.public_id,
+            url: cloudinaryResponse.secure_url,
+        },
+    });
+    res.status(200).json({
+        success: true,
+        message: "Application Submitted!",
+        application,
+    });
+   });
+```
+
+<br>
+
+![cloudinary config](https://github.com/MangwonCassie/JobSeek/assets/129250487/6f271835-9347-4e0e-b31e-054fd9dd2050)
+
+
+
+
+
+
+
+![cloudinary media library](https://github.com/MangwonCassie/JobSeek/assets/129250487/eead3722-9e8d-4303-8b78-5432d16b05c0)
