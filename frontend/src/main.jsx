@@ -1,4 +1,4 @@
-import React, { createContext } from 'react'
+import React, { createContext, useState } from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
@@ -11,7 +11,7 @@ const AppWrapper = () => {
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [user, setUser] = useState({}); // user정보 받아올 때 업데이트
   return (
-    <context.Provider
+    <Context.Provider
       value={{
         isAuthorized,
         setIsAuthorized,
@@ -19,7 +19,7 @@ const AppWrapper = () => {
         setUser
       }}>
       <App />
-    </context.Provider>
+    </Context.Provider>
   )
 }
 
