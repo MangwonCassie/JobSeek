@@ -1,6 +1,4 @@
 import { useContext, useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import { Toaster } from "react-hot-toast";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
@@ -20,9 +18,9 @@ import NotFound from "./components/NotFound/NotFound";
 import MyJobs from "./components/Job/MyJobs";
 
 
-
 const App = () => {
   const { isAuthorized, setIsAuthorized, setUser } = useContext(Context);
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -45,7 +43,7 @@ const App = () => {
   return (
     <>
       <BrowserRouter>
-        <Navbar />
+        {isAuthorized && <Navbar />}
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
