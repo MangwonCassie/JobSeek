@@ -9,6 +9,7 @@ export const Context = createContext({
 const AppWrapper = () => {
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [user, setUser] = useState({}); // user정보 받아올 때 업데이트
+
   return (
     <Context.Provider
       value={{
@@ -23,5 +24,5 @@ const AppWrapper = () => {
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <AppWrapper />,
+  <AppWrapper />
 )
