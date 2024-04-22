@@ -6,6 +6,7 @@ import { FaFacebookF, FaYoutube, FaLinkedin } from "react-icons/fa";
 const Footer = () => {
 
     const { isAuthorized } = useContext(Context);
+
     return (
         <footer className={isAuthorized ? "footerShow" : "footerHide"}>
             <div>All Rights Reserved By Cassie Kim</div>

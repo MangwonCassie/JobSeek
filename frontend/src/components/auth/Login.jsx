@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FaPencilAlt, FaRegUser } from 'react-icons/fa';
 import { Link, Navigate } from 'react-router-dom';
 import { Context } from '../../main';
@@ -29,11 +29,31 @@ const Login = () => {
             setEmail("");
             setPassword("");
             setRole("");
-            setIsAuthorized(true);
+            setIsAuthorized(true);// 로그인 성공 시 setIsAuthorized를 true로 설정
         } catch (error) {
             toast.error(error.response.data.message);
         }
     };
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const response = await axios.get(
+                    "http://localhost:4000/api/v1/user/getuser",
+                    {
+                        withCredentials: true,
+                    }
+                );
+                setUser(response.data.user);
+            } catch (error) {
+                setIsAuthorized(false);
+            }
+        };
+        if (isAuthorized) {
+            fetchUser();
+        }
+    }, [isAuthorized]);
+
 
     if (isAuthorized) {
         return <Navigate to={'/'} />

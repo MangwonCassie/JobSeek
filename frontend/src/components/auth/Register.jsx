@@ -14,7 +14,7 @@ const Register = () => {
 
     const { isAuthorized, setIsAuthorized, user, setUser } = useContext(Context);
 
-    const handleLogin = async (e) => {
+    const handleRegister = async (e) => {
         e.preventDefault();
         try {
             const { data } = await axios.post(
@@ -110,7 +110,7 @@ const Register = () => {
                             <FaPencilAlt />
                         </div>
                     </div>
-                    <button type="submit" onClick={handleLogin}>
+                    <button type="submit" onClick={handleRegister}>
                         Register
                     </button>
                     <Link to={"/login"}>Login Now</Link>
