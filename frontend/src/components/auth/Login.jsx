@@ -7,8 +7,6 @@ import toast from 'react-hot-toast';
 
 const Login = () => {
     const [email, setEmail] = useState("");
-    const [name, setName] = useState("");
-    const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
     const [role, setRole] = useState("");
 
@@ -48,11 +46,11 @@ const Login = () => {
                 <div className="container">
                     <div className="header">
                         <img src="/cassie-logo.png" alt="logo" />
-                        <h3>Create a new account</h3>
+                        <h3>Login to your account</h3>
                     </div>
                     <form>
                         <div className="inputTag">
-                            <label>Register As</label>
+                            <label>Login As</label>
                             <div>
                                 <select value={role} onChange={(e) => setRole(e.target.value)}>
                                     <option value="">Select Role</option>
@@ -63,18 +61,6 @@ const Login = () => {
                             </div>
                         </div>
                         <div className="inputTag">
-                            <label>Name</label>
-                            <div>
-                                <input
-                                    type="text"
-                                    placeholder="Cassie"
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                />
-                                <FaPencilAlt />
-                            </div>
-                        </div>
-                        <div className="inputTag">
                             <label>Email Address</label>
                             <div>
                                 <input
@@ -82,18 +68,6 @@ const Login = () => {
                                     placeholder="cassie@gmail.com"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                />
-                                <FaPencilAlt />
-                            </div>
-                        </div>
-                        <div className="inputTag">
-                            <label>Phone Number</label>
-                            <div>
-                                <input
-                                    type="number"
-                                    placeholder="12345678"
-                                    value={phone}
-                                    onChange={(e) => setPhone(e.target.value)}
                                 />
                                 <FaPencilAlt />
                             </div>
@@ -113,7 +87,7 @@ const Login = () => {
                         <button type="submit" onClick={handleLogin}>
                             Login
                         </button>
-                        <Link to={"/login"}>Login Now</Link>
+                        <Link to={"/register"}>Register Now</Link>
                     </form>
                 </div>
                 <div className="banner">
