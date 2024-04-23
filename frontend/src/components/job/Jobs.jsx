@@ -11,11 +11,17 @@ const Jobs = () => {
     useEffect(() => {
         try {
             axios
-                .get("/api/v1/job/getall", {
+                .get("http://localhost:4000/api/v1/job/getall", {
                     withCredentials: true,
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json"
+                    }
                 })
                 .then((res) => {
+                    console.log("res.status", res.status);
                     console.log("Res.data", res.data); // res.data 출력
+                    console.log("Res.data.data", res.data.data); // res.data 출력
                     console.log("Res.data.jobs", res.data.jobs); // res.data 출력
                     setJobs(res.data);
                 });
