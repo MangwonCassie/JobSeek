@@ -15,7 +15,6 @@ const Jobs = () => {
                     withCredentials: true,
                     headers: {
                         "Accept": "application/json",
-                        "Content-Type": "application/json"
                     }
                 })
                 .then((res) => {
