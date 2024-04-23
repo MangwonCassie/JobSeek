@@ -257,11 +257,47 @@ export const postApplication = catchAsyncError(async (req, res, next) => {
 
 <br><br>
 
-
-
-
-
-
-
-
 ![cloudinary media library](https://github.com/MangwonCassie/JobSeek/assets/129250487/eead3722-9e8d-4303-8b78-5432d16b05c0)
+
+<br><br>
+
+<h4>Job getall api res.status는 200이지만 console로 확인할 경우 html 응답으로 처리되는 거 오류 해결하는 방법 정리</h4><br>
+
+![getall error](https://github.com/MangwonCassie/JobSeek/assets/129250487/d6330ace-1db0-45bf-8ca5-6c750d4c9159)
+
+-axios 요청에서 Accept 헤더를 명시적으로 설정하지 않으면 서버가 HTML 대신 JSON 응답을 보내더라도, 클라이언트가 HTML로 응답을 받아들일 수 있음.<br>
+
+- 관련 코드 <br>
+```
+const Jobs = () => {
+
+    const [jobs, setJobs] = useState([]);
+    const { isAuthorized } = useContext(Context);
+    const navigateTo = useNavigate();
+    useEffect(() => {
+        try {
+            axios
+                .get("http://localhost:4000/api/v1/job/getall", {
+                    withCredentials: true,
+                    headers: {
+                        "Accept": "application/json",
+                    }
+                })
+                .then((res) => {
+                    console.log("res.status", res.status);
+                    console.log("Res.data", res.data); // res.data 출력
+                    console.log("Res.data.data", res.data.data); // res.data 출력
+                    console.log("Res.data.jobs", res.data.jobs); // res.data 출력
+                    setJobs(res.data);
+                });
+        } catch (error) {
+            console.log(error);
+        }
+    }, []);
+    if (!isAuthorized) {
+        navigateTo("/");
+    }
+```
+<br>
+- console.log로 res.status는 200인 것을 확인했지만 res.data는 html형식, res.data.jobs 는 undefined가 뜬다는 사실 확인
+- post요청이면 "Content-Type": "application/json" 까지 설정해줘야하지만 getall api는 get요청이므로 accept 헤더 타입만 기입해주면 됨.
