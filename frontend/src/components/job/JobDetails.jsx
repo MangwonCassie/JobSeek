@@ -12,10 +12,16 @@ const JobDetails = () => {
     const { isAuthorized, user } = useContext(Context);
     useEffect(() => {
         axios
-            .get(`http://localhost:4000/api/v1/job/${id}`, {
+            .get(`http://localhost:4000/api/v1/job/getsinglejob/${id}`, {
                 withCredentials: true,
+                headers: {
+                    "Accept": "application/json",
+                },
+                credentials: 'include' // 세션 ID를 서버에 포함
             })
             .then((res) => {
+                console.log("Job Detail res.data", res.data);
+                console.log("res.data.job", res.data.job)
                 setJob(res.data.job);
             })
             .catch((error) => {
