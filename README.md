@@ -32,7 +32,7 @@ export const catchAsyncError = (theFunction) => {
 <br>
 [추가 참고 자료:] (https://velog.io/@tastestar/Express-error-handling)
 <br>
-<h5>http요청과 별도로 jwt를 보낸다. jwt를 생성하는로직과 별도로 클라이언트에게 보내는 logic sendToken 함수 설정. </h5><br>
+<h4>http요청과 별도로 jwt를 보낸다. jwt를 생성하는로직과 별도로 클라이언트에게 보내는 logic sendToken 함수 설정. </h4><br>
 - statusCode는 Express.js에서 내장된 메서드인 res.status()의 매개변수를 이용해서 res.status(statusCode)로 응답상태 코드를 설정하고, res.cookie 메서드를 사용하여 클라이언트에게 jwt를 담을 쿠키를 설정한다. <br>
 - 이 때 json형식으로 응답을 보내터 클라이언트에게 성공 및 "사용자 정보"와 함께 "토큰"을 보낸다. <br>
 - JSON Web Token(JWT)을 생성할 때 사용되는 시크릿 키(secretOrPrivateKey)를 정의하는 것은 jsonwebtoken 라이브러리를 사용하여 JWT를 생성할 때 필요하므로 env파일에 JWT_SECRET_KEY=임의로 지정 <br>
@@ -42,7 +42,7 @@ export const catchAsyncError = (theFunction) => {
 ![register token](https://github.com/MangwonCassie/JobSeek/assets/129250487/42a48de7-bb0f-4b1c-b780-c73c4c77f3c7)
 ![expiresin](https://github.com/MangwonCassie/JobSeek/assets/129250487/b106cfbf-fe56-4e88-95cc-b33798b4b12a)
 <br>
-<h5>http요청과 별도로 jwt를 보낸다. jwt를 생성하는로직과 별도로 클라이언트에게 보내는 logic sendToken 함수 설정. </h5><br>
+<h4>http요청과 별도로 jwt를 보낸다. jwt를 생성하는로직과 별도로 클라이언트에게 보내는 logic sendToken 함수 설정. </h4><br>
 - 로그아웃 로직에서는 쿠키의 token을 빈 문자열로 설정하여 브라우저에서 해당 쿠키를 삭제하고, 만료일을 현재 시간으로 설정하여 쿠키를 즉시 만료시켜 로그아웃으로 처리합니다.
 <br>
 -코드 <br>
@@ -71,7 +71,7 @@ export const logout = catchAsyncError(async (req, res, next) => {
 
 
 <br>
-<h5>role에 접근 안되는 이유</h5><br>
+<h4>role에 접근 안되는 이유</h4><br>
 - +를 사용하지 않으면 해당 필드는 기본적으로 조회되지 않습니다. 즉, 해당 필드는 결과에 포함되지 않습니다. 따라서 +를 사용하여 해당 필드를 명시적으로 선택하여 조회해야 합니다. 그렇지 않으면 해당 필드에 접근할 때 undefined가 반환되거나 오류가 발생할 수 있습니다.<br>
 <br>
 - 관련 코드
@@ -255,9 +255,49 @@ export const postApplication = catchAsyncError(async (req, res, next) => {
 ![cloudinary config](https://github.com/MangwonCassie/JobSeek/assets/129250487/6f271835-9347-4e0e-b31e-054fd9dd2050)
 
 
-
-
-
-
+<br><br>
 
 ![cloudinary media library](https://github.com/MangwonCassie/JobSeek/assets/129250487/eead3722-9e8d-4303-8b78-5432d16b05c0)
+
+<br><br>
+
+<h4>Job getall api res.status는 200이지만 console로 확인할 경우 html 응답으로 처리되는 거 오류 해결하는 방법 정리</h4><br>
+
+![getall error](https://github.com/MangwonCassie/JobSeek/assets/129250487/d6330ace-1db0-45bf-8ca5-6c750d4c9159)
+
+-axios 요청에서 Accept 헤더를 명시적으로 설정하지 않으면 서버가 HTML 대신 JSON 응답을 보내더라도, 클라이언트가 HTML로 응답을 받아들일 수 있음.<br>
+
+- 관련 코드 <br>
+```
+const Jobs = () => {
+
+    const [jobs, setJobs] = useState([]);
+    const { isAuthorized } = useContext(Context);
+    const navigateTo = useNavigate();
+    useEffect(() => {
+        try {
+            axios
+                .get("http://localhost:4000/api/v1/job/getall", {
+                    withCredentials: true,
+                    headers: {
+                        "Accept": "application/json",
+                    }
+                })
+                .then((res) => {
+                    console.log("res.status", res.status);
+                    console.log("Res.data", res.data); // res.data 출력
+                    console.log("Res.data.data", res.data.data); // res.data 출력
+                    console.log("Res.data.jobs", res.data.jobs); // res.data 출력
+                    setJobs(res.data);
+                });
+        } catch (error) {
+            console.log(error);
+        }
+    }, []);
+    if (!isAuthorized) {
+        navigateTo("/");
+    }
+```
+<br>
+- console.log로 res.status는 200인 것을 확인했지만 res.data는 html형식, res.data.jobs 는 undefined가 뜬다는 사실 확인
+- post요청이면 "Content-Type": "application/json" 까지 설정해줘야하지만 getall api는 get요청이므로 accept 헤더 타입만 기입해주면 됨.
