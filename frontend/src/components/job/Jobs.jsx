@@ -15,6 +15,8 @@ const Jobs = () => {
                     withCredentials: true,
                 })
                 .then((res) => {
+                    console.log("Res.data", res.data); // res.data 출력
+                    console.log("Res.data.jobs", res.data.jobs); // res.data 출력
                     setJobs(res.data);
                 });
         } catch (error) {
@@ -24,6 +26,7 @@ const Jobs = () => {
     if (!isAuthorized) {
         navigateTo("/");
     }
+
 
     return (
         <section className="jobs page">
