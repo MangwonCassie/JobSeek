@@ -2,13 +2,14 @@ import { catchAsyncError } from "../middlewares/catchAsyncError.js";
 import ErrorHandler from "../middlewares/error.js";
 import { Job } from "../model/jobSchema.js";
 
+
 export const getAllJobs = catchAsyncError(async (req, res, next) => {
     const jobs = await Job.find({ expired: false });
     res.status(200).json({
         success: true,
         jobs,
-    })
-})
+    });
+});
 
 export const postJob = catchAsyncError(async (req, res, next) => {
     const { role } = req.user;
@@ -146,7 +147,7 @@ export const deleteJob = catchAsyncError(async (req, res, next) => {
     })
 });
 
-export const getSingleJob = catchAsyncErrors(async (req, res, next) => {
+export const getSingleJob = catchAsyncError(async (req, res, next) => {
     const { id } = req.params;
     try {
         const job = await Job.findById(id);

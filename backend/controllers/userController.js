@@ -33,7 +33,7 @@ export const login = catchAsyncError(async (req, res, next) => {
             new ErrorHandler("Please provide email ,password and role.", 400)
         );
     }
-    const user = await User.findOne({ email }).select("+password");;
+    const user = await User.findOne({ email }).select("+password");
 
     if (!user) {
         return next(new ErrorHandler("Invalid Email or password"));
@@ -54,15 +54,17 @@ export const login = catchAsyncError(async (req, res, next) => {
 
 
 export const logout = catchAsyncError(async (req, res, next) => {
-    res.status(201).cookie("token", "", {
-        httpOnly: true,
-        expires: new Date(Date.now()),
-    })
+    res
+        .status(201)
+        .cookie("token", "", {
+            httpOnly: true,
+            expires: new Date(Date.now()),
+        })
         .json({
             success: true,
-            message: "User Logged Out Successfully"
-        })
-})
+            message: "Logged Out Successfully.",
+        });
+});
 
 export const getUser = catchAsyncError(async (req, res, next) => {
     const user = req.user;
