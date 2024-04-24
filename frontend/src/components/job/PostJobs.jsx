@@ -18,7 +18,9 @@ const PostJobs = () => {
     const [salaryType, setSalaryType] = useState("default");
 
     const { isAuthorized, user } = useContext(Context);
+    const token = document.cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1];
 
+    console.log("token확인", token);
     const handleJobPost = async (e) => {
         e.preventDefault();
         if (salaryType === "Fixed Salary") {
@@ -55,11 +57,14 @@ const PostJobs = () => {
                         salaryTo,
                     },
                 {
-                    withCredentials: true,
+
                     headers: {
+                        "Accept": "application/json",
                         "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`,
                     },
-                }
+                    withCredentials: true,
+                },
             )
             .then((res) => {
                 toast.success(res.data.message);

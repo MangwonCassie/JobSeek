@@ -20,6 +20,7 @@ const Login = () => {
                 { email, password, role },
                 {
                     headers: {
+                        "Accept": "application/json",
                         "Content-Type": "application/json",
                     },
                     withCredentials: true,
@@ -27,6 +28,7 @@ const Login = () => {
             );
             toast.success(data.message);
             document.cookie = `token=${data.token}; path=/;`;  // 토큰을 쿠키에 저장 (getUser 때문에 테스트중)
+            console.log("login component" + data.token);
             setEmail("");
             setPassword("");
             setRole("");
