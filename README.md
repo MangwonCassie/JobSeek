@@ -299,12 +299,29 @@ const Jobs = () => {
     }
 ```
 <br>
-- console.log로 res.status는 200인 것을 확인했지만 res.data는 html형식, res.data.jobs 는 undefined가 뜬다는 사실 확인
-- post요청이면 "Content-Type": "application/json" 까지 설정해줘야하지만 getall api는 get요청이므로 accept 헤더 타입만 기입해주면 됨.
+- console.log로 res.status는 200인 것을 확인했지만 res.data는 html형식, res.data.jobs 는 undefined가 뜬다는 사실 확인<br>
+- post요청이면 "Content-Type": "application/json" 까지 설정해줘야하지만 getall api는 get요청이므로 accept 헤더 타입만 기입해주면 됨.<br>
 
 <br>
 <h4>500 error 처리 </h4><br>
 ![post job 500 error 해결](https://github.com/MangwonCassie/JobSeek/assets/129250487/e61d78ff-ce3f-4927-bec7-426b3bd0efa7)
+<br>
+
 - post job api 모델스키마와 controller 순서 맞춰야함. <br>
 
+
+<h4>Cors 에러처리 </h4><br>
+- BE
+<br>
+```
+app.use(
+  cors({
+    origin: [process.env.FRONTEND_URL, "http://localhost:5173", "http://localhost:5173/", "http://127.0.0.1:5173/", "*"],
+    method: ["GET", "POST", "DELETE", "PUT"],
+    credentials: true,
+  })
+)
+```
+
+<br>
 
