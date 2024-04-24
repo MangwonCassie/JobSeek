@@ -8,7 +8,7 @@ const router = express.Router();
 router.get("/getall", getAllJobs);
 router.post("/post", isAuthorized, postJob);
 router.get("/getmyjobs", isAuthorized, getMyJobs);
-router.put("/updatemyjob/:id", isAuthorized, updateJob);
+router.put("/update/:id", isAuthorized, updateJob);
 router.delete("/deletemyjob/:id", isAuthorized, deleteJob);
 router.get("/getsinglejob/:id", isAuthorized, getSingleJob);
 
