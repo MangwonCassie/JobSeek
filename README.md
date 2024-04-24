@@ -313,6 +313,7 @@ const Jobs = () => {
 <h4>Cors 에러처리 </h4><br>
 - BE
 <br>
+<br>
 ```
 app.use(
   cors({
@@ -322,6 +323,52 @@ app.use(
   })
 )
 ```
-
 <br>
+<br>
+
+-FE <br>
+<br>
+```
+"proxy": {
+    "/api": {
+      "target": "http://localhost:4000",
+      "changeOrigin": true,
+      "secure": false
+    }
+  }
+
+```
+<br>
+-package.json 설정해도 localhost 말고 127로 시작하는 주소로 api 요청해야 rest api 동작하는 경우 있음 <br>
+<br>
+
+
+```
+const App = () => {
+  const { isAuthorized, setIsAuthorized, user, setUser } = useContext(Context);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get(
+          "http://127.0.0.1:4000/api/v1/user/getuser",
+          {
+            headers: {
+              "Accept": "application/json",
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          }
+        );
+        setUser(response.data.user);
+        setIsAuthorized(true);
+      } catch (error) {
+        console.log("App에서 user 가져왔나요?", user);
+        setIsAuthorized(false);
+      }
+    };
+    fetchUser();
+  }, [isAuthorized]); 
+```
+
 
