@@ -17,8 +17,9 @@ const Navbar = () => {
 
     const handleLogout = async () => {
         try {
-            const response = await axios.get(
-                "/api/v1/user/logout",
+            const response = await axios.post(
+                "http://127.0.0.1:4000/api/v1/user/logout",
+                {}, //빈객체전달
                 {
                     withCredentials: true,
                 }
