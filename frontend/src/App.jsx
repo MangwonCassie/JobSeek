@@ -26,20 +26,24 @@ const App = () => {
     const fetchUser = async () => {
       try {
         const response = await axios.get(
-          "/api/v1/user/getuser",
+          "http://127.0.0.1:4000/api/v1/user/getuser",
           {
+            headers: {
+              "Accept": "application/json",
+              "Content-Type": "application/json",
+            },
             withCredentials: true,
           }
         );
         setUser(response.data.user);
         setIsAuthorized(true);
       } catch (error) {
-        console.log("App에서 user 가져왔나요?", response.data.user);
+        console.log("App에서 user 가져왔나요?", user);
         setIsAuthorized(false);
       }
     };
     fetchUser();
-  }, []);
+  }, [isAuthorized]); //이거때문에 로그인 해도 user 안 가져옴 그리고 로그아웃이 안됨
 
 
   return (

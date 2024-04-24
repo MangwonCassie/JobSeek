@@ -10,7 +10,8 @@ const Navbar = () => {
     const { isAuthorized, setIsAuthorized, user } = useContext(Context);
     const navigateTo = useNavigate();
 
-    console.log("user 정보:", user); // user 정보 출력
+    console.log("Navbar의 Context 정보:", Context); // user 정보 출력
+    console.log("Navbar의 user 정보:", user); // user 정보 출력
     console.log("isAuthorized 했나 아니오:", isAuthorized); // isAuthorized 값 콘솔에 출력
 
 
