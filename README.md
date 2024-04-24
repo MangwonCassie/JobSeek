@@ -374,7 +374,27 @@ const App = () => {
 <br>
 <h4>웹브라우저에 쿠키가 남아 있어서 계속 로그아웃이 안되는 오류 해결하는 현상 </h4><br>
 -BEFORE (BE 부분) <br>
+- get 요청 put 요청으로 변경 <br>
+- logout 시 빈객체를 전달 <br>
+- BE 파트 clearCookie로 쉽게 코드 리팩토링 <br>
 
+```
+export const logout = catchAsyncError(async (req, res, next) => {
+    res
+        .status(201)
+        .cookie("token", "", {
+            httpOnly: true,
+            expires: new Date(Date.now()),
+        })
+        .json({
+            success: true,
+            message: "Logged Out Successfully.",
+        });
+});
+
+```
+
+<br>
 
 -AFTER (BE) 부분 <br>
 
@@ -389,6 +409,25 @@ export const logout = catchAsyncError(async (req, res, next) => {
 
 
 - BEFORE (FE 부분)<br>
+
+```
+const handleLogout = async () => {
+    try {
+        const response = await axios.get(
+            "/api/v1/user/logout",
+            {
+                withCredentials: true,
+            }
+        );
+        toast.success(response.data.message);
+        setIsAuthorized(false);
+        navigateTo("/login");
+    } catch (error) {
+        toast.error(error.response.data.message);
+        setIsAuthorized(true);
+    }
+};
+```
 
 
 
