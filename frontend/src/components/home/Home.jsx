@@ -9,8 +9,9 @@ import PopularCompanies from "./PopularCompanies";
 
 
 const Home = () => {
-    const { isAuthorized } = useContext(Context);
+    const { isAuthorized, user } = useContext(Context);
 
+    console.log("Home 컴포넌트", user);
 
 
     if (!isAuthorized) {

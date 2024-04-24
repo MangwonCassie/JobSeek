@@ -20,7 +20,8 @@ import MyJobs from "./components/Job/MyJobs";
 
 
 const App = () => {
-  const { isAuthorized, setIsAuthorized, setUser } = useContext(Context);
+  const { isAuthorized, setIsAuthorized, user, setUser } = useContext(Context);
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -33,6 +34,7 @@ const App = () => {
         setUser(response.data.user);
         setIsAuthorized(true);
       } catch (error) {
+        console.log("App에서 user 가져왔나요?", response.data.user);
         setIsAuthorized(false);
       }
     };
