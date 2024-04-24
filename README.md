@@ -371,4 +371,47 @@ const App = () => {
   }, [isAuthorized]); 
 ```
 
+<br>
+<h4>웹브라우저에 쿠키가 남아 있어서 계속 로그아웃이 안되는 오류 해결하는 현상 </h4><br>
+-BEFORE (BE 부분) <br>
+
+
+-AFTER (BE) 부분 <br>
+
+```
+export const logout = catchAsyncError(async (req, res, next) => {
+    res.clearCookie("token").status(201).json({
+        success: true,
+        message: "Logged Out Successfully.",
+    });
+});
+```
+
+
+- BEFORE (FE 부분)<br>
+
+
+
+- AFTER (FE 부분)<br>
+  
+```
+const handleLogout = async () => {
+    try {
+        const response = await axios.post(
+            "/api/v1/user/logout",
+            {}, // 빈 객체 전달
+            {
+                withCredentials: true,
+            }
+        );
+        toast.success(response.data.message);
+        setIsAuthorized(false);
+        navigateTo("/login");
+    } catch (error) {
+        toast.error(error.response.data.message);
+        setIsAuthorized(true);
+    }
+};
+```
+
 
