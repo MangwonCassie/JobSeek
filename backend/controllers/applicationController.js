@@ -16,8 +16,9 @@ export const employerGetAllApplications = catchAsyncError(async (req, res, next)
         )
     }
 
-    const { _id } = req.user;
-    const applications = await Application.find({ 'applicationId.user:': _id });
+    const { _id, applicantID } = req.user;
+    console.log("employer확인중", req.user);
+    const applications = await Application.find({ 'applicationId.user:': applicantID });
     res.status(200).json({
         success: true,
         applications
@@ -28,6 +29,8 @@ export const employerGetAllApplications = catchAsyncError(async (req, res, next)
 export const jobseekerGetAllApplications = catchAsyncError(async (req, res, next) => {
     const { role } = req.user;
 
+    console.log("백엔드:", req.user)
+
     if (role === "Employer") {
         return next(
             new ErrorHandler(
@@ -37,8 +40,9 @@ export const jobseekerGetAllApplications = catchAsyncError(async (req, res, next
         )
     }
 
-    const { _id } = req.user;
-    const applications = await Application.find({ 'applicationId.user:': _id });
+    const { _id, applicantID } = req.user; //_id로 가져오면 데이터를 찾을 수가 없음. applicantID로 찾아야함
+    const applications = await Application.find({ 'applicationId.user:': applicantID });
+    console.log("applications 안생김", applications);
     res.status(200).json({
         success: true,
         applications
@@ -49,6 +53,8 @@ export const jobseekerGetAllApplications = catchAsyncError(async (req, res, next
 export const jobseekerDeleteApplication = catchAsyncError(
     async (req, res, next) => {
         const { role } = req.user;
+        console.log("백엔드:", req.user)
+
         if (role === "Employer") {
             return next(
                 new ErrorHandler("Employer not allowed to access this resource.", 400)

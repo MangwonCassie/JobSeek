@@ -12,6 +12,6 @@ const router = express.Router();
 router.get("/employer/getall", isAuthorized, employerGetAllApplications);
 router.delete("/delete/:id", isAuthorized, jobseekerDeleteApplication);
 router.post("/post", isAuthorized, postApplication);
-router.get("/jobseeker/getall", isAuthorized, employerGetAllApplications);
+router.get("/jobseeker/getall", isAuthorized, jobseekerGetAllApplications);
 
 export default router;
