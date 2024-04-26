@@ -9,7 +9,7 @@ export const employerGetAllApplications = catchAsyncError(async (req, res, next)
 
     if (role === "Job Seeker") {
         return next(
-            new ErrorHanlder(
+            new ErrorHandler(
                 "Job Seeker is not allowed to access these resources!",
                 400
             )
@@ -30,7 +30,7 @@ export const jobseekerGetAllApplications = catchAsyncError(async (req, res, next
 
     if (role === "Employer") {
         return next(
-            new ErrorHanlder(
+            new ErrorHandler(
                 "Employer is not allowed to access these resources!",
                 400
             )
